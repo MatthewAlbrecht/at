@@ -1,81 +1,59 @@
 ---
+// https://css-tricks.com/a-trick-that-makes-drawing-svg-lines-way-easier/
 import Layout from '../layouts/Layout.astro';
-import Card from '../components/Card.astro';
+import { contentfulClient } from '../lib/contentful';
+import { documentToHtmlString } from '@contentful/rich-text-html-renderer';
+import dayjs from 'dayjs';
+
+import type { CheckIn } from '../../contentfulTypes';
+
+const entries = await contentfulClient.getEntries<CheckIn>({
+  content_type: 'checkIn',
+});
 ---
 
 <Layout title="Welcome to Astro.">
-	<main>
-		<h1>Welcome to <span class="text-gradient">Astro</span></h1>
-		<p class="instructions">
-			To get started, open the directory <code>src/pages</code> in your project.<br />
-			<strong>Code Challenge:</strong> Tweak the "Welcome to Astro" message above.
-		</p>
-		<ul role="list" class="link-card-grid">
-			<Card
-				href="https://docs.astro.build/"
-				title="Documentation"
-				body="Learn how Astro works and explore the official API docs."
-			/>
-			<Card
-				href="https://astro.build/integrations/"
-				title="Integrations"
-				body="Supercharge your project with new frameworks and libraries."
-			/>
-			<Card
-				href="https://astro.build/themes/"
-				title="Themes"
-				body="Explore a galaxy of community-built starter themes."
-			/>
-			<Card
-				href="https://astro.build/chat/"
-				title="Community"
-				body="Come say hi to our amazing Discord community. ❤️"
-			/>
-		</ul>
-	</main>
-</Layout>
+  <main class="w-1/2 mx-auto py-12">
+    <ul class="space-y-2">
+      {
+        entries.items.map(
+          ({ fields: { title, note, date, media, mileMarker, location } }) => (
+            <li class="bg-slate-800 p-4 rounded-lg">
+              <div class="flex justify-between text-slate-400 font-semi-bold text-xs tracking-wide mb-1">
+                <span>
+                  {dayjs(date).format('MMM DD, YYYY')} •
+                  {location ? `${location} • ` : ''}
+                  {mileMarker}mi
+                </span>
+              </div>
 
-<style>
-	main {
-		margin: auto;
-		padding: 1.5rem;
-		max-width: 60ch;
-	}
-	h1 {
-		font-size: 3rem;
-		font-weight: 800;
-		margin: 0;
-	}
-	.text-gradient {
-		background-image: var(--accent-gradient);
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
-		background-size: 400%;
-		background-position: 0%;
-	}
-	.instructions {
-		line-height: 1.6;
-		margin: 1rem 0;
-		border: 1px solid rgba(var(--accent), 25%);
-		background-color: white;
-		padding: 1rem;
-		border-radius: 0.4rem;
-	}
-	.instructions code {
-		font-size: 0.875em;
-		font-weight: bold;
-		background: rgba(var(--accent), 12%);
-		color: rgb(var(--accent));
-		border-radius: 4px;
-		padding: 0.3em 0.45em;
-	}
-	.instructions strong {
-		color: rgb(var(--accent));
-	}
-	.link-card-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
-		gap: 1rem;
-		padding: 0;
-	}
-</style>
+              <h1 class="text-slate-200 text-2xl font-bold">{title}</h1>
+              {note && (
+                <div
+                  class="text-slate-400 mt-4"
+                  set:html={documentToHtmlString(note)}
+                />
+              )}
+              {media && (
+                <ul class="flex space-x-3 mt-4">
+                  {media?.map((mediaItem, index) => (
+                    <img
+                      src={mediaItem.fields.file.url}
+                      class:list={[
+                        'h-[6rem] transition-transform hover:scale-105 rounded',
+                        {
+                          'rotate-1': index % 2 === 0,
+                          '-rotate-1': index % 2 === 1,
+                        },
+                      ]}
+                    />
+                  ))}
+                </ul>
+              )}
+            </li>
+          )
+        )
+      }
+    </ul>
+  </main>
+</Layout>
