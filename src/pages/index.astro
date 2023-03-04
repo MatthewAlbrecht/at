@@ -9,7 +9,6 @@ import {
 import dayjs from 'dayjs'
 
 import type { CheckIn } from '../../contentfulTypes'
-import { MARKS } from '@contentful/rich-text-types'
 import TrailLine from '../components/TrailLine.astro'
 import UnitedStates from '../components/UnitedStates.astro'
 
@@ -18,8 +17,8 @@ const entries = await contentfulClient.getEntries<CheckIn>({
 })
 const richTextRenderingOptions: Options = {
   renderMark: {
-    [MARKS.BOLD]: (text) => `<strong>${text}</strong>`,
-    [MARKS.ITALIC]: (text) => `<em>${text}</em>`,
+    bold: (text) => `<strong>${text}</strong>`,
+    italic: (text) => `<em>${text}</em>`,
   },
 }
 ---
