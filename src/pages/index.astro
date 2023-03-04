@@ -1,7 +1,10 @@
 ---
 // https://css-tricks.com/a-trick-that-makes-drawing-svg-lines-way-easier/
+import { Image } from '@astrojs/image/components'
 import Layout from '../layouts/Layout.astro'
 import { contentfulClient } from '../lib/contentful'
+import { TOTAL_MILES, getCurrentSectionDetails } from '../lib/at'
+
 import {
   Options,
   documentToHtmlString,
@@ -9,27 +12,51 @@ import {
 import dayjs from 'dayjs'
 
 import type { CheckIn } from '../../contentfulTypes'
-import TrailLine from '../components/TrailLine.astro'
 import UnitedStates from '../components/UnitedStates.astro'
 
-const entries = await contentfulClient.getEntries<CheckIn>({
+/* TODO @matthewalbrecht: SORT THIS BY DATE */
+const checkIns = await contentfulClient.getEntries<CheckIn>({
   content_type: 'checkIn',
 })
+
 const richTextRenderingOptions: Options = {
   renderMark: {
     bold: (text) => `<strong>${text}</strong>`,
     italic: (text) => `<em>${text}</em>`,
   },
 }
+
+const { currentSectionName, currentMileMarker, trailLinePercentComplete } =
+  getCurrentSectionDetails(checkIns)
 ---
 
 <Layout title="Matt and Mark's AT Adventure">
-  <main class="grid gap-8 md:grid-cols-5">
-    <ul class="z-10 space-y-6 md:col-span-3">
+  <header class="fixed z-20 h-12 w-full">
+    <h1 class="font-bold text-zinc-200">
+      Matt<span class="font-normal">&</span>Mark
+    </h1>
+    <div class="flex items-center space-x-2">
+      <div class="flex items-center space-x-1">
+        <span class="text-xs text-zinc-400">Current Section:</span>
+        <span class="text-xs font-bold text-zinc-200">{currentSectionName}</span
+        >
+      </div>
+      <div class="flex items-center space-x-1">
+        <span class="text-xs text-zinc-400">Current Mile Marker:</span>
+        <span class="text-xs font-bold text-zinc-200"
+          >{currentMileMarker.toFixed(1)} / {TOTAL_MILES}</span
+        >
+      </div>
+    </div>
+  </header>
+  <main class="grid gap-8 pt-14 md:grid-cols-5">
+    <ul
+      class="md: z-10 h-[calc(100vh-6rem)] space-y-6 overflow-scroll rounded-lg pt-[calc(100vh-6rem)] md:col-span-3 md:-mx-4 md:pt-0"
+    >
       {
-        entries.items.map(
+        checkIns.items.map(
           ({ fields: { title, note, date, media, mileMarker, location } }) => (
-            <li class="rounded-lg bg-zinc-800 p-4">
+            <li class=" rounded-lg bg-zinc-800 p-4">
               <div class="font-semi-bold mb-1 flex justify-between text-xs tracking-wide text-zinc-400">
                 <span>
                   {dayjs(date).format('MMM DD, YYYY')} •
@@ -51,10 +78,14 @@ const richTextRenderingOptions: Options = {
               {media && (
                 <ul class="mt-7 flex space-x-3">
                   {media?.map((mediaItem, index) => (
-                    <img
+                    <Image
                       src={mediaItem.fields.file.url}
+                      alt={mediaItem.fields.description}
+                      height={mediaItem.fields.file.details.image?.height ?? 0}
+                      width={mediaItem.fields.file.details.image?.width ?? 0}
+                      fit="cover"
                       class:list={[
-                        'h-[6rem] transition-transform hover:scale-105 rounded',
+                        'h-[6rem] w-[9rem] transition-transform hover:scale-105 rounded',
                         {
                           'rotate-1': index % 2 === 0,
                           '-rotate-1': index % 2 === 1,
@@ -75,9 +106,9 @@ const richTextRenderingOptions: Options = {
           class="pointer-events-none absolute h-full w-full bg-gradient-to-r from-zinc-900 to-zinc-900/0"
         >
         </div>
-        <UnitedStates />
+        <UnitedStates percentComplete={trailLinePercentComplete} />
       </div>
-      <div
+      <!-- <div
         class="pointer-events-none fixed top-[3rem] right-[1rem] lg:right-[7.25rem]"
       >
         <TrailLine classes="stroke-zinc-600" />
@@ -86,7 +117,7 @@ const richTextRenderingOptions: Options = {
         class="pointer-events-none fixed top-[3rem] right-[1rem] lg:right-[7.25rem]"
       >
         <TrailLine classes="stroke-zinc-200" percentComplete={0.5} />
-      </div>
+      </div> -->
     </div>
   </main>
 </Layout>
