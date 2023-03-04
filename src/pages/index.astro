@@ -24,8 +24,8 @@ const richTextRenderingOptions: Options = {
 ---
 
 <Layout title="Matt and Mark's AT Adventure">
-  <main class="grid gap-8 md:grid-cols-2">
-    <ul class="z-10 order-2 space-y-6 md:order-1">
+  <main class="grid gap-8 md:grid-cols-5">
+    <ul class="z-10 space-y-6 md:col-span-3">
       {
         entries.items.map(
           ({ fields: { title, note, date, media, mileMarker, location } }) => (
@@ -69,18 +69,22 @@ const richTextRenderingOptions: Options = {
         )
       }
     </ul>
-    <div class="order-1 md:order-2">
-      <div class="fixed right-[3.9rem] -top-[3.4rem]">
+    <div>
+      <div class="fixed -top-[3.4rem] right-[-2.35rem] lg:right-[3.9rem]">
         <div
           class="pointer-events-none absolute h-full w-full bg-gradient-to-r from-zinc-900 to-zinc-900/0"
         >
         </div>
         <UnitedStates />
       </div>
-      <div class="pointer-events-none fixed top-[3rem] right-[7.25rem]">
+      <div
+        class="pointer-events-none fixed top-[3rem] right-[1rem] lg:right-[7.25rem]"
+      >
         <TrailLine classes="stroke-zinc-600" />
       </div>
-      <div class="pointer-events-none fixed top-[3rem] right-[7.25rem]">
+      <div
+        class="pointer-events-none fixed top-[3rem] right-[1rem] lg:right-[7.25rem]"
+      >
         <TrailLine classes="stroke-zinc-200" percentComplete={0.5} />
       </div>
     </div>
