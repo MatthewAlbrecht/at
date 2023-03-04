@@ -1,24 +1,27 @@
 {
-	"name": "at",
-	"type": "module",
-	"version": "0.0.1",
-	"scripts": {
-		"dev": "astro dev",
-		"start": "astro dev",
-		"build": "astro build",
-		"preview": "astro preview",
-		"astro": "astro"
-	},
-	"dependencies": {
-		"@astrojs/tailwind": "^3.0.1",
-		"@contentful/rich-text-html-renderer": "^16.0.2",
-		"astro": "^2.0.16",
-		"contentful": "^9.3.3",
-		"contentful-ts-type-generator": "github:arimkevi/contentful-ts-type-generator",
-		"dayjs": "^1.11.7",
-		"tailwindcss": "^3.0.24"
-	},
-	"devDependencies": {
-		"@contentful/rich-text-types": "^16.0.2"
-	}
+  "name": "at",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/tailwind": "^3.0.1",
+    "@contentful/rich-text-html-renderer": "^16.0.2",
+    "astro": "^2.0.16",
+    "contentful": "^9.3.3",
+    "contentful-ts-type-generator": "github:arimkevi/contentful-ts-type-generator",
+    "dayjs": "^1.11.7",
+    "tailwindcss": "^3.0.24"
+  },
+  "devDependencies": {
+    "@contentful/rich-text-types": "^16.0.2",
+    "prettier": "^2.8.4",
+    "prettier-plugin-astro": "^0.8.0",
+    "prettier-plugin-tailwindcss": "^0.2.4"
+  }
 }

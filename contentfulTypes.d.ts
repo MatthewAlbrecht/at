@@ -1,6 +1,6 @@
 import { Entry, Asset } from 'contentful'
 export const CheckIn = 'checkIn'
-import type { Document } from '@contentful/rich-text-types';
+import type { Document } from '@contentful/rich-text-types'
 
 export interface CheckIn {
   //Check In
@@ -12,4 +12,3 @@ export interface CheckIn {
   readonly note?: Document
   readonly title: string
 }
-
