@@ -2,24 +2,36 @@
 // https://css-tricks.com/a-trick-that-makes-drawing-svg-lines-way-easier/
 import Layout from '../layouts/Layout.astro'
 import { contentfulClient } from '../lib/contentful'
-import { documentToHtmlString } from '@contentful/rich-text-html-renderer'
+import {
+  Options,
+  documentToHtmlString,
+} from '@contentful/rich-text-html-renderer'
 import dayjs from 'dayjs'
 
 import type { CheckIn } from '../../contentfulTypes'
+import { MARKS } from '@contentful/rich-text-types'
+import TrailLine from '../components/TrailLine.astro'
+import UnitedStates from '../components/UnitedStates.astro'
 
 const entries = await contentfulClient.getEntries<CheckIn>({
   content_type: 'checkIn',
 })
+const richTextRenderingOptions: Options = {
+  renderMark: {
+    [MARKS.BOLD]: (text) => `<strong>${text}</strong>`,
+    [MARKS.ITALIC]: (text) => `<em>${text}</em>`,
+  },
+}
 ---
 
 <Layout title="Welcome to Astro.">
-  <main class="md:w-1/2">
-    <ul class="space-y-6">
+  <main class="grid gap-8 md:grid-cols-2">
+    <ul class="z-10 order-2 space-y-6 md:order-1">
       {
         entries.items.map(
           ({ fields: { title, note, date, media, mileMarker, location } }) => (
-            <li class="rounded-lg bg-slate-800 p-4">
-              <div class="font-semi-bold mb-1 flex justify-between text-xs tracking-wide text-slate-400">
+            <li class="rounded-lg bg-zinc-800 p-4">
+              <div class="font-semi-bold mb-1 flex justify-between text-xs tracking-wide text-zinc-400">
                 <span>
                   {dayjs(date).format('MMM DD, YYYY')} •
                   {location ? `${location} • ` : ''}
@@ -27,15 +39,18 @@ const entries = await contentfulClient.getEntries<CheckIn>({
                 </span>
               </div>
 
-              <h1 class="text-2xl font-bold text-slate-200">{title}</h1>
+              <h1 class="text-2xl font-bold text-zinc-200">{title}</h1>
               {note && (
                 <div
-                  class="mt-4 text-slate-400"
-                  set:html={documentToHtmlString(note)}
+                  class="prose mt-4 text-zinc-400 prose-blockquote:border-zinc-300 prose-blockquote:text-zinc-300 prose-strong:text-zinc-400"
+                  set:html={documentToHtmlString(
+                    note,
+                    richTextRenderingOptions
+                  )}
                 />
               )}
               {media && (
-                <ul class="mt-4 flex space-x-3">
+                <ul class="mt-7 flex space-x-3">
                   {media?.map((mediaItem, index) => (
                     <img
                       src={mediaItem.fields.file.url}
@@ -55,5 +70,20 @@ const entries = await contentfulClient.getEntries<CheckIn>({
         )
       }
     </ul>
+    <div class="order-1 md:order-2">
+      <div class="fixed right-[3.9rem] -top-[3.4rem]">
+        <div
+          class="pointer-events-none absolute h-full w-full bg-gradient-to-r from-zinc-900 to-zinc-900/0"
+        >
+        </div>
+        <UnitedStates />
+      </div>
+      <div class="pointer-events-none fixed top-[3rem] right-[7.25rem]">
+        <TrailLine classes="stroke-zinc-600 " />
+      </div>
+      <div class="pointer-events-none fixed top-[3rem] right-[7.25rem]">
+        <TrailLine classes="stroke-zinc-200 " percentComplete={0.5} />
+      </div>
+    </div>
   </main>
 </Layout>
