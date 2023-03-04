@@ -37,12 +37,12 @@ const { currentSectionName, currentMileMarker, trailLinePercentComplete } =
     </h1>
     <div class="flex items-center space-x-2">
       <div class="flex items-center space-x-1">
-        <span class="text-xs text-zinc-400">Current Section:</span>
+        <span class="text-xs text-zinc-400">Section:</span>
         <span class="text-xs font-bold text-zinc-200">{currentSectionName}</span
         >
       </div>
       <div class="flex items-center space-x-1">
-        <span class="text-xs text-zinc-400">Current Mile Marker:</span>
+        <span class="text-xs text-zinc-400">Mile:</span>
         <span class="text-xs font-bold text-zinc-200"
           >{currentMileMarker.toFixed(1)} / {TOTAL_MILES}</span
         >
@@ -51,7 +51,7 @@ const { currentSectionName, currentMileMarker, trailLinePercentComplete } =
   </header>
   <main class="grid gap-8 pt-14 md:grid-cols-5">
     <ul
-      class="md: z-10 h-[calc(100vh-6rem)] space-y-6 overflow-scroll rounded-lg pt-[calc(100vh-6rem)] md:col-span-3 md:-mx-4 md:pt-0"
+      class="md: z-10 h-[calc(100vh-6rem)] space-y-6 overflow-scroll rounded-lg pt-[calc(100vh-9.5rem)] md:col-span-3 md:-mx-4 md:pt-0"
     >
       {
         checkIns.items.map(
@@ -101,23 +101,15 @@ const { currentSectionName, currentMileMarker, trailLinePercentComplete } =
       }
     </ul>
     <div>
-      <div class="fixed -top-[3.4rem] right-[-2.35rem] lg:right-[3.9rem]">
+      <div
+        class="fixed -top-[1.4rem] right-[-2.35rem] md:-top-[3.4rem] lg:right-[3.9rem]"
+      >
         <div
           class="pointer-events-none absolute h-full w-full bg-gradient-to-r from-zinc-900 to-zinc-900/0"
         >
         </div>
         <UnitedStates percentComplete={trailLinePercentComplete} />
       </div>
-      <!-- <div
-        class="pointer-events-none fixed top-[3rem] right-[1rem] lg:right-[7.25rem]"
-      >
-        <TrailLine classes="stroke-zinc-600" />
-      </div>
-      <div
-        class="pointer-events-none fixed top-[3rem] right-[1rem] lg:right-[7.25rem]"
-      >
-        <TrailLine classes="stroke-zinc-200" percentComplete={0.5} />
-      </div> -->
     </div>
   </main>
 </Layout>
