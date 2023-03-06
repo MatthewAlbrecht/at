@@ -10,8 +10,17 @@ import react from '@astrojs/react'
 import netlify from '@astrojs/netlify/functions'
 
 // https://astro.build/config
+import image from '@astrojs/image'
+
+// https://astro.build/config
 export default defineConfig({
   output: 'server',
-  integrations: [tailwind(), react()],
+  integrations: [
+    tailwind(),
+    react(),
+    image({
+      serviceEntryPoint: '@astrojs/image/sharp',
+    }),
+  ],
   adapter: netlify(),
 })

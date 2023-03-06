@@ -1,5 +1,4 @@
 import {
-  ReactionVariant,
   ReactionVariantEnum,
   ReactionVariantIconMap,
   incrementReactionCount,
@@ -26,17 +25,17 @@ export default function ReactionButton({
     : 0
 
   const totalCountOpacity =
-    totalCount >= 10
+    totalCountCurrentIP >= 10
       ? 'opacity-100'
-      : totalCount >= 8
+      : totalCountCurrentIP >= 8
       ? 'opacity-80'
-      : totalCount >= 6
+      : totalCountCurrentIP >= 6
       ? 'opacity-60'
-      : totalCount >= 4
+      : totalCountCurrentIP >= 4
       ? 'opacity-50'
-      : totalCount >= 2
+      : totalCountCurrentIP >= 2
       ? 'opacity-40'
-      : totalCount
+      : totalCountCurrentIP
       ? 'opacity-30'
       : 'opacity-25'
   const handleClick = async (variant: ReactionVariantEnum) => {

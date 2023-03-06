@@ -4,6 +4,8 @@ import Layout from '../layouts/Layout.astro'
 import { contentfulClient } from '../lib/contentful'
 import { TOTAL_MILES, getCurrentSectionDetails } from '../lib/at'
 
+import { Image } from '@astrojs/image/components'
+
 import {
   Options,
   documentToHtmlString,
@@ -107,13 +109,14 @@ const { currentSectionName, currentMileMarker, trailLinePercentComplete } =
               {media && (
                 <ul class="mt-7 flex space-x-3">
                   {media?.map((mediaItem, index) => (
-                    <img
+                    <Image
                       src={mediaItem.fields.file.url}
                       alt={mediaItem.fields.description}
                       height={mediaItem.fields.file.details.image?.height ?? 0}
                       width={mediaItem.fields.file.details.image?.width ?? 0}
+                      fit="cover"
                       class:list={[
-                        'h-[6rem] w-[9rem] transition-transform hover:scale-105 rounded object-cover',
+                        'h-[6rem] w-[9rem] transition-transform hover:scale-105 rounded',
                         {
                           'rotate-1': index % 2 === 0,
                           '-rotate-1': index % 2 === 1,

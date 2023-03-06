@@ -3,6 +3,6 @@
   "compilerOptions": {
     "jsx": "react-jsx",
     "jsxImportSource": "react",
-    "types": ["astro"]
+    "types": ["astro", "@astrojs/image/client"]
   }
 }
