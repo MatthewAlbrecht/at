@@ -23,6 +23,7 @@
     "astro": "^2.0.16",
     "contentful": "^9.3.3",
     "contentful-ts-type-generator": "github:arimkevi/contentful-ts-type-generator",
+    "cross-fetch": "^3.1.5",
     "dayjs": "^1.11.7",
     "nanostores": "^0.7.4",
     "react": "^18.0.0",
