@@ -1,6 +1,18 @@
 [functions]
-  external_node_modules = ["@supabase/*", "bufferutil", "@supabase/supabase-js", "@supabase/functions-js", "@supabase/postgrest-js", "cross-fetch"]
-  included_files = ["node_modules/@supabase/supabase-js/**/*", "node_modules/@supabase/supabase-js/**/*", "node_modules/@supabase/functions-js/**/*", "node_modules/@supabase/postgrest-js/**/*"]
+  external_node_modules = [
+    "@supabase/supabase-js", 
+    "@supabase/functions-js", 
+    "@supabase/postgrest-js", 
+    "bufferutil", 
+    "cross-fetch"
+  ]
+  included_files = [
+    "node_modules/@supabase/supabase-js/**/*", 
+    "node_modules/@supabase/supabase-js/**/*", 
+    "node_modules/@supabase/functions-js/**/*", 
+    "node_modules/@supabase/postgrest-js/**/*",
+    "node_modules/cross-fetch"
+     ]
   node_bundler = "esbuild"
 [build]
   command = "astro build"
