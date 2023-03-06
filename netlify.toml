@@ -1,6 +1,6 @@
 [functions]
-  external_node_modules = ["sharp", "@supabase/supabase-js", "bufferutil"]
-  included_files = ["node_modules/**/*"]
+  external_node_modules = ["@supabase/supabase-js", "bufferutil"]
+  included_files = ["node_modules/@supabase/supabase-js/**/*"]
   node_bundler = "esbuild"
 [build]
   command = "astro build"
