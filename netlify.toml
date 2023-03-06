@@ -1,6 +1,6 @@
 [functions]
-  external_node_modules = ["@supabase", "bufferutil", "@supabase/supabase-js", "@supabase/functions-js"]
-  included_files = ["node_modules/@supabase/supabase-js/**/*", "node_modules/@supabase/functions-js/**/*"]
+  external_node_modules = ["@supabase", "bufferutil", "@supabase/supabase-js", "@supabase/functions-js", "@supabase/postgrest-js"]
+  included_files = ["node_modules/@supabase/supabase-js/**/*", "node_modules/@supabase/functions-js/**/*", "node_modules/@supabase/postgrest-js/**/*"]
   node_bundler = "esbuild"
 [build]
   command = "astro build"
