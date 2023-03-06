@@ -13,6 +13,7 @@ specifiers:
   '@types/react': ^18.0.21
   '@types/react-dom': ^18.0.6
   astro: ^2.0.16
+  bufferutil: ^4.0.7
   contentful: ^9.3.3
   contentful-ts-type-generator: github:arimkevi/contentful-ts-type-generator
   dayjs: ^1.11.7
@@ -35,6 +36,7 @@ dependencies:
   '@types/react': 18.0.28
   '@types/react-dom': 18.0.11
   astro: 2.0.16
+  bufferutil: 4.0.7
   contentful: 9.3.3
   contentful-ts-type-generator: github.com/arimkevi/contentful-ts-type-generator/1b2b45fd5ad3075d5c2dee40538ce5f40bb2c8bb
   dayjs: 1.11.7
