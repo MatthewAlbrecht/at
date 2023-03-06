@@ -7,6 +7,7 @@ specifiers:
   '@contentful/rich-text-html-renderer': ^16.0.2
   '@contentful/rich-text-types': ^16.0.2
   '@nanostores/react': ^0.4.1
+  '@supabase/functions-js': ^2.1.0
   '@supabase/supabase-js': ^2.10.0
   '@tailwindcss/typography': ^0.5.9
   '@types/react': ^18.0.21
@@ -29,6 +30,7 @@ dependencies:
   '@astrojs/tailwind': 3.0.1_dcffs6vszochbmkyu5n7efg4ri
   '@contentful/rich-text-html-renderer': 16.0.2
   '@nanostores/react': 0.4.1_nkfnbc2tpc77iht7asm3uqwau4
+  '@supabase/functions-js': 2.1.0
   '@supabase/supabase-js': 2.10.0
   '@types/react': 18.0.28
   '@types/react-dom': 18.0.11
