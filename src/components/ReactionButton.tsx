@@ -78,7 +78,7 @@ export default function ReactionButton({
         &nbsp;
         <span
           className={`text-xs font-semibold ${
-            totalCount ? 'text-red-500' : 'text-zinc-400 opacity-50'
+            totalCountCurrentIP ? 'text-red-500' : 'text-zinc-400 opacity-50'
           }`}
         >
           {totalCount}
