@@ -13,6 +13,8 @@ import dayjs from 'dayjs'
 
 import type { CheckIn } from '../../contentfulTypes'
 import UnitedStates from '../components/UnitedStates.astro'
+import ReactionButtonList from '../components/ReactionButtonList.astro'
+import GetAllReactionCounts from '../components/GetAllReactionCounts'
 
 /* TODO @matthewalbrecht: SORT THIS BY DATE */
 const checkIns = await contentfulClient.getEntries<CheckIn>({
@@ -32,33 +34,61 @@ const { currentSectionName, currentMileMarker, trailLinePercentComplete } =
 
 <Layout title="Matt and Mark's AT Adventure">
   <header class="fixed z-20 h-12 w-full">
-    <h1 class="font-bold text-zinc-200">
-      Matt<span class="font-normal">&</span>Mark
-    </h1>
-    <div class="flex items-center space-x-2">
-      <div class="flex items-center space-x-1">
-        <span class="text-xs text-zinc-400">Section:</span>
-        <span class="text-xs font-bold text-zinc-200">{currentSectionName}</span
-        >
-      </div>
-      <div class="flex items-center space-x-1">
-        <span class="text-xs text-zinc-400">Mile:</span>
-        <span class="text-xs font-bold text-zinc-200"
-          >{currentMileMarker.toFixed(1)} / {TOTAL_MILES}</span
-        >
+    <div class="flex justify-start">
+      <svg
+        class="inline-block h-10 w-10"
+        viewBox="0 0 512 512"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M478.442 403.758C403.758 488.903 119.307 499.962 33.1011 403.758C18.7209 224.268 148.422 94.3325 233.768 48.8062C248.654 40.8655 251.371 40.0001 256.651 40C261.932 39.9999 264.573 41.9768 280.415 48.8062C363.146 84.4706 495.867 211.055 478.442 403.758Z"
+          fill="#F4F4F5"
+          stroke="#18181B"
+          stroke-width="5"></path>
+        <path
+          d="M101.596 361.713C104.152 236.091 202.576 134.457 252.646 124.416C253.824 124.18 254.947 124.17 256.129 124.377C307.805 133.43 407.968 227.611 410.41 361.702C410.468 364.884 409.255 367.971 406.84 370.045C351.22 417.819 167.489 424.958 105.145 370.075C102.756 367.972 101.531 364.895 101.596 361.713Z"
+          fill="#064E3B"></path>
+        <path
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          d="M150.321 311.899C149.502 313.231 150.46 314.946 152.024 314.946H183.757C184.431 314.946 185.06 314.606 185.43 314.042L199.61 292.398C199.98 291.834 200.609 291.495 201.283 291.495H238.635C239.74 291.495 240.635 292.39 240.635 293.495V393.812C240.635 394.917 241.531 395.812 242.635 395.812H267.747C268.852 395.812 269.747 394.917 269.747 393.812V293.495C269.747 292.39 270.643 291.495 271.747 291.495H309.877C310.569 291.495 311.211 291.852 311.576 292.44L324.959 314.001C325.323 314.588 325.966 314.946 326.658 314.946H359.976C361.54 314.946 362.499 313.231 361.68 311.899L268.716 160.635C268.352 160.043 267.707 159.682 267.012 159.682H244.988C244.294 159.682 243.648 160.043 243.285 160.635L150.321 311.899ZM256.959 197.4C256.17 196.086 254.256 196.111 253.502 197.446L218.06 260.208C217.307 261.541 218.271 263.191 219.802 263.191H292.901C294.456 263.191 295.416 261.495 294.616 260.162L256.959 197.4Z"
+          fill="#F4F4F5"></path>
+      </svg>
+      <div class="ml-3">
+        <h1 class="font-bold text-zinc-200">
+          Matt<span class="font-normal">&</span>Mark
+        </h1>
+        <div class="flex items-center space-x-2">
+          <div class="flex items-center space-x-1">
+            <span class="text-xs text-zinc-400">Section:</span>
+            <span class="text-xs font-bold text-zinc-200"
+              >{currentSectionName}</span
+            >
+          </div>
+          <div class="flex items-center space-x-1">
+            <span class="text-xs text-zinc-400">Mile:</span>
+            <span class="text-xs font-bold text-zinc-200"
+              >{currentMileMarker.toFixed(1)} / {TOTAL_MILES}</span
+            >
+          </div>
+        </div>
       </div>
     </div>
   </header>
-  <main class="grid gap-8 pt-14 md:grid-cols-5">
+  <main class="grid gap-8 pt-16 md:grid-cols-5">
     <ul
-      class="md: z-10 h-[calc(100vh-6rem)] space-y-6 overflow-scroll rounded-lg pt-[calc(100vh-12rem)] pb-8 md:col-span-3 md:-mx-4 md:pt-0"
+      class="z-10 h-[calc(100vh-6rem)] space-y-12 overflow-scroll rounded-lg pt-[calc(100vh-12rem)] pb-8 md:col-span-3 md:-mx-4 md:pt-0"
     >
       {
         checkIns.items.map(
-          ({ fields: { title, note, date, media, mileMarker, location } }) => (
-            <li class=" rounded-lg bg-zinc-800 p-4">
-              <div class="font-semi-bold mb-1 flex justify-between text-xs tracking-wide text-zinc-400">
-                <span>
+          ({
+            fields: { title, note, date, media, mileMarker, location },
+            sys: { id },
+          }) => (
+            <li class=" relative rounded-lg bg-zinc-800 p-4">
+              <div class="">
+                <span class="font-semi-bold mb-1 flex justify-between text-xs tracking-wide text-zinc-400">
                   {dayjs(date).format('MMM DD, YYYY')} •
                   {location ? `${location} • ` : ''}
                   {mileMarker}mi
@@ -95,6 +125,9 @@ const { currentSectionName, currentMileMarker, trailLinePercentComplete } =
                   ))}
                 </ul>
               )}
+              <div class="absolute right-4 bottom-0 flex w-20 translate-y-1/2 justify-center rounded bg-zinc-700 shadow">
+                <ReactionButtonList contentfulId={id} />
+              </div>
             </li>
           )
         )
@@ -112,4 +145,5 @@ const { currentSectionName, currentMileMarker, trailLinePercentComplete } =
       </div>
     </div>
   </main>
+  <GetAllReactionCounts client:load />
 </Layout>

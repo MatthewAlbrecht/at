@@ -1,0 +1,46 @@
+---
+type Props = {
+  contentfulId: string
+}
+import ReactionButton from './ReactionButton'
+const { contentfulId } = Astro.props
+import { ReactionVariant } from '../lib/reactionStore'
+---
+
+<div class="flex space-x-4">
+  <!-- <div>
+    <ReactionButton
+      client:load
+      contentfulId={contentfulId}
+      reactionVariant={ReactionVariant.LIKE}
+    />
+  </div> -->
+  <div>
+    <ReactionButton
+      client:load
+      contentfulId={contentfulId}
+      reactionVariant={ReactionVariant.LOVE}
+    />
+  </div>
+  <!-- <div>
+    <ReactionButton
+      client:load
+      contentfulId={contentfulId}
+      reactionVariant={ReactionVariant.BOOTS}
+    />
+  </div> -->
+  <!-- <div>
+    <ReactionButton
+      client:load
+      contentfulId={contentfulId}
+      reactionVariant={ReactionVariant.WALK}
+    />
+  </div> -->
+  <!-- <div>
+    <ReactionButton
+      client:load
+      contentfulId={contentfulId}
+      reactionVariant={ReactionVariant.CAMP}
+    />
+  </div> -->
+</div>
