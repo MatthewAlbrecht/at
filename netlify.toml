@@ -1,6 +1,7 @@
 [functions]
   # external_node_modules = ["sharp"]
   included_files = ["node_modules/**/*"]
+  node_bundler = “esbuild”
 [build]
   command = "astro build"
   publish = "dist"
