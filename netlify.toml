@@ -1,5 +1,5 @@
 [functions]
-  # external_node_modules = ["sharp"]
+  external_node_modules = ["sharp", "@supabase/supabase-js", "bufferutil"]
   included_files = ["node_modules/**/*"]
   node_bundler = "esbuild"
 [build]
