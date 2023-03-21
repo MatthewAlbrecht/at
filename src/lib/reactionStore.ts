@@ -36,7 +36,6 @@ export const incrementReactionCount = (
   reactionVariant: ReactionVariantEnum,
   amount = 1
 ) => {
-  console.log('===HERE===', 'incrementReactionCount')
   const entries = { ...reactionCounts.get() }
   const key = getReactionCountKey(contentfulId, reactionVariant)
   const entry = entries[key]

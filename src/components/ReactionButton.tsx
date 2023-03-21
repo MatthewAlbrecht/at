@@ -71,14 +71,14 @@ export default function ReactionButton({
         disabled={totalCountCurrentIP >= 12}
       >
         <span
-          className={`inline-block text-lg transition-[transform,opacity] duration-300 hover:scale-110 active:scale-125 active:duration-75 ${totalCountOpacity}`}
+          className={`inline-block text-lg transition-[transform] duration-300 hover:scale-110 active:scale-125 active:duration-75`}
         >
           {ReactionVariantIconMap[reactionVariant]}
         </span>
         &nbsp;
         <span
           className={`text-xs font-semibold ${
-            totalCountCurrentIP ? 'text-red-500' : 'text-zinc-400 opacity-50'
+            totalCountCurrentIP ? 'text-red-500' : 'text-zinc-400'
           }`}
         >
           {totalCount}
