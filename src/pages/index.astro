@@ -17,7 +17,6 @@ import UnitedStates from '../components/UnitedStates.astro'
 import ReactionButtonList from '../components/ReactionButtonList.astro'
 import GetAllReactionCounts from '../components/GetAllReactionCounts'
 
-/* TODO @matthewalbrecht: SORT THIS BY DATE */
 const checkIns = await contentfulClient.getEntries<CheckIn>({
   content_type: 'checkIn',
 })
@@ -37,7 +36,7 @@ const { currentSectionName, currentMileMarker, trailLinePercentComplete } =
 ---
 
 <Layout title="Matt and Mark's AT Adventure">
-  <header class="fixed z-20 h-12 w-full">
+  <header class="fixed z-20 h-16 w-full bg-zinc-900 pt-4 md:bg-none">
     <div class="flex justify-start">
       <svg
         class="inline-block h-10 w-10"
@@ -129,7 +128,27 @@ const { currentSectionName, currentMileMarker, trailLinePercentComplete } =
                         width={mediaItem.fields.file.details.image?.width ?? 0}
                         fit="cover"
                         class:list={[
-                          'h-[6rem] w-[9rem] transition-transform hover:scale-105 rounded',
+                          'h-[6rem] w-[9rem] transition-transform hover:scale-105 rounded object-cover',
+                          {
+                            'rotate-1': index % 2 === 0,
+                            '-rotate-1': index % 2 === 1,
+                          },
+                        ]}
+                      />
+                    </a>
+                  ))}
+                  {media?.map((mediaItem, index) => (
+                    <a target="_blank" href={mediaItem.fields.file.url}>
+                      <Image
+                        src={mediaItem.fields.file.url}
+                        alt={mediaItem.fields.description}
+                        height={
+                          mediaItem.fields.file.details.image?.height ?? 0
+                        }
+                        width={mediaItem.fields.file.details.image?.width ?? 0}
+                        fit="cover"
+                        class:list={[
+                          'h-[6rem] w-[9rem] transition-transform hover:scale-105 rounded object-cover',
                           {
                             'rotate-1': index % 2 === 0,
                             '-rotate-1': index % 2 === 1,
