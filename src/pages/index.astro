@@ -137,26 +137,6 @@ const { currentSectionName, currentMileMarker, trailLinePercentComplete } =
                       />
                     </a>
                   ))}
-                  {media?.map((mediaItem, index) => (
-                    <a target="_blank" href={mediaItem.fields.file.url}>
-                      <Image
-                        src={mediaItem.fields.file.url}
-                        alt={mediaItem.fields.description}
-                        height={
-                          mediaItem.fields.file.details.image?.height ?? 0
-                        }
-                        width={mediaItem.fields.file.details.image?.width ?? 0}
-                        fit="cover"
-                        class:list={[
-                          'h-[6rem] w-[9rem] transition-transform hover:scale-105 rounded object-cover',
-                          {
-                            'rotate-1': index % 2 === 0,
-                            '-rotate-1': index % 2 === 1,
-                          },
-                        ]}
-                      />
-                    </a>
-                  ))}
                 </ul>
               )}
               <div class="absolute right-4 bottom-0 flex w-20 translate-y-1/2 justify-center rounded bg-zinc-700 shadow">
