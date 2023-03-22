@@ -138,8 +138,10 @@ function getTrailLinePercentComplete(
   return svgStart + (svgEnd - svgStart) * sectionPercentComplete
 }
 
-export function getCurrentSectionDetails(checkIns: EntryCollection<CheckIn>) {
-  const currentMileMarker = checkIns.items.reduce(
+export function getCurrentSectionDetails(
+  checkIns: EntryCollection<CheckIn>['items']
+) {
+  const currentMileMarker = checkIns.reduce(
     (acc, { fields: { mileMarker } }) => Math.max(acc, mileMarker),
     0
   )

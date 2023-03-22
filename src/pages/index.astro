@@ -21,6 +21,9 @@ import GetAllReactionCounts from '../components/GetAllReactionCounts'
 const checkIns = await contentfulClient.getEntries<CheckIn>({
   content_type: 'checkIn',
 })
+const sortedCheckIns = checkIns.items.sort((a, b) =>
+  a.fields.mileMarker > b.fields.mileMarker ? -1 : 1
+)
 
 const richTextRenderingOptions: Options = {
   renderMark: {
@@ -30,7 +33,7 @@ const richTextRenderingOptions: Options = {
 }
 
 const { currentSectionName, currentMileMarker, trailLinePercentComplete } =
-  getCurrentSectionDetails(checkIns)
+  getCurrentSectionDetails(sortedCheckIns)
 ---
 
 <Layout title="Matt and Mark's AT Adventure">
@@ -57,9 +60,16 @@ const { currentSectionName, currentMileMarker, trailLinePercentComplete } =
           fill="#F4F4F5"></path>
       </svg>
       <div class="ml-3">
-        <h1 class="font-bold text-zinc-200">
-          Matt<span class="font-normal">&</span>Mark
-        </h1>
+        <div class="flex items-center">
+          <h1 class="font-bold text-zinc-200">
+            Matt<span class="font-normal">&</span>Mark
+          </h1>
+          <a
+            href="/about"
+            class="ml-4 text-sm text-zinc-400 hover:underline-offset-1"
+            >About Us</a
+          >
+        </div>
         <div class="flex items-center space-x-2">
           <div class="flex items-center space-x-1">
             <span class="text-xs text-zinc-400">Section:</span>
@@ -79,10 +89,10 @@ const { currentSectionName, currentMileMarker, trailLinePercentComplete } =
   </header>
   <main class="grid gap-8 pt-16 md:grid-cols-5">
     <ul
-      class="z-10 h-[calc(100vh-6rem)] space-y-12 overflow-scroll rounded-lg pt-[calc(100vh-12rem)] pb-8 md:col-span-3 md:-mx-4 md:pt-0"
+      class="z-10 h-[calc(100vh-6rem)] space-y-12 rounded-lg pt-[calc(100vh-15rem)] pb-8 md:col-span-3 md:-mx-4 md:overflow-scroll md:pt-0"
     >
       {
-        checkIns.items.map(
+        sortedCheckIns.map(
           ({
             fields: { title, note, date, media, mileMarker, location },
             sys: { id },
@@ -109,20 +119,24 @@ const { currentSectionName, currentMileMarker, trailLinePercentComplete } =
               {media && (
                 <ul class="mt-7 flex space-x-3">
                   {media?.map((mediaItem, index) => (
-                    <Image
-                      src={mediaItem.fields.file.url}
-                      alt={mediaItem.fields.description}
-                      height={mediaItem.fields.file.details.image?.height ?? 0}
-                      width={mediaItem.fields.file.details.image?.width ?? 0}
-                      fit="cover"
-                      class:list={[
-                        'h-[6rem] w-[9rem] transition-transform hover:scale-105 rounded',
-                        {
-                          'rotate-1': index % 2 === 0,
-                          '-rotate-1': index % 2 === 1,
-                        },
-                      ]}
-                    />
+                    <a target="_blank" href={mediaItem.fields.file.url}>
+                      <Image
+                        src={mediaItem.fields.file.url}
+                        alt={mediaItem.fields.description}
+                        height={
+                          mediaItem.fields.file.details.image?.height ?? 0
+                        }
+                        width={mediaItem.fields.file.details.image?.width ?? 0}
+                        fit="cover"
+                        class:list={[
+                          'h-[6rem] w-[9rem] transition-transform hover:scale-105 rounded',
+                          {
+                            'rotate-1': index % 2 === 0,
+                            '-rotate-1': index % 2 === 1,
+                          },
+                        ]}
+                      />
+                    </a>
                   ))}
                 </ul>
               )}
